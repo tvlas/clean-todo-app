@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/todo_bloc.dart';
 import '../widgets/todo_list.dart';
+import 'add_todo_dialog.dart';
 
 class TodoPage extends StatelessWidget {
   const TodoPage({super.key});
@@ -27,7 +28,10 @@ class TodoPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Logic to add a new todo
+          showDialog(
+            context: context,
+            builder: (context) => const AddTodoDialog(),
+          );
         },
         child: const Icon(Icons.add),
       ),

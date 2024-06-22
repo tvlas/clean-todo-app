@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/todo.dart';
@@ -36,7 +36,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       final failureOrSuccess = await addTodo(event.todo);
       emit(failureOrSuccess.fold(
         (failure) => const TodoError(message: 'Error adding todo'),
-        (_) => TodoAdded(),
+        (_) {
+          add(GetTodosEvent());
+          return TodoAdded();
+        },
       ));
     });
 
@@ -44,7 +47,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       final failureOrSuccess = await updateTodo(event.todo);
       emit(failureOrSuccess.fold(
         (failure) => const TodoError(message: 'Error updating todo'),
-        (_) => TodoUpdated(),
+        (_) {
+          add(GetTodosEvent());
+          return TodoUpdated();
+        },
       ));
     });
 
@@ -52,7 +58,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       final failureOrSuccess = await deleteTodo(event.id);
       emit(failureOrSuccess.fold(
         (failure) => const TodoError(message: 'Error deleting todo'),
-        (_) => TodoDeleted(),
+        (_) {
+          add(GetTodosEvent());
+          return TodoDeleted();
+        },
       ));
     });
   }
