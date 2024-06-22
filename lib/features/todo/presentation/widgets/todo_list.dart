@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/todo.dart';
 import '../bloc/todo_bloc.dart';
+import 'edit_todo_dialog.dart';
 
 class TodoList extends StatelessWidget {
   final List<Todo> todos;
@@ -28,7 +29,10 @@ class TodoList extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.edit),
                 onPressed: () {
-                  //todo: Implement edit functionality
+                  showDialog(
+                    context: context,
+                    builder: (context) => EditTodoDialog(todo: todo),
+                  );
                 },
               ),
               IconButton(
